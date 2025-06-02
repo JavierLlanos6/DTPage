@@ -24,6 +24,7 @@ export async function addPlayer(data) {
     foot: data.foot,
     position: data.position, // array
     playerType: data.playerType, // nuevo campo
+    photo: data.photo,
   });
 }
 

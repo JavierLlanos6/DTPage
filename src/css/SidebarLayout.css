@@ -1,11 +1,12 @@
 .app-layout {
   display: flex;
   height: 100vh;
+  background-color: #f5f5f5;
 }
 
 .sidebar {
-  width: 220px;
-  background-color: #222;
+  width: 250px;
+  background-color: #0D1440; /* azul de Boca */
   color: white;
   display: flex;
   flex-direction: column;
@@ -13,23 +14,50 @@
 }
 
 .sidebar a {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.8rem;
   color: white;
   text-decoration: none;
-  transition: background 0.3s;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: bold;
+  transition: background-color 0.2s;
+  padding: 0.5rem;
+  border-radius: 5px;
 }
 
 .sidebar a:hover,
 .sidebar a.active {
-  background-color: #444;
+  background-color: #FDB813; /* amarillo oro */
+  color: #0D1440;
 }
 
 .content {
   flex: 1;
   padding: 2rem;
   background-color: #f4f4f4;
-  overflow-y: auto;
+}
+.club-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 1rem;
+  margin-bottom: 2rem;
+}
+
+.club-logo img {
+  width: 50px;
+  height: auto;
+}
+
+.club-logo p {
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+  line-height: 1.2;
+  margin: 0;
+}
+
+.club-logo span {
+  color: #FDB813; /* Amarillo oro */
 }

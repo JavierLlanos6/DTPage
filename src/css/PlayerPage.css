@@ -1,3 +1,70 @@
-body{
-    background-color: aliceblue;
+h1{
+    font-size: 1.8rem;
+    color: #0f1d88;
+    margin-bottom: 1rem;
+    border-bottom: 2px solid #f1c40f;
+    display: inline-block;
+}
+.player-form {
+  max-width: 600px;
+  margin: auto;
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: #0033a0; /* azul Boca */
+}
+
+input, select {
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.checkbox-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 0.5rem;
+}
+
+.checkbox-item {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+button {
+  background-color: #0f1d88;
+  color: #fff;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #FDB813;
+  color: #0f1d88;
+}
+
+.input-error {
+  border: 2px solid red;
+}
+
+.error-text {
+  color: red;
+  font-size: 0.875rem;
+  margin-top: 0.3rem;
 }

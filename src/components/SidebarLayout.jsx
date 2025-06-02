@@ -1,4 +1,3 @@
-// components/SidebarLayout.jsx
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import {
@@ -9,7 +8,7 @@ import {
   FaChartBar,
   FaFutbol,
 } from "react-icons/fa";
-import "../css/SidebarLayout.css"; // crea estilos a tu gusto
+import "../css/SidebarLayout.css";
 
 function SidebarLayout({ children }) {
   const { pathname } = useLocation();
@@ -17,6 +16,12 @@ function SidebarLayout({ children }) {
   return (
     <div className="app-layout">
       <aside className="sidebar">
+        <div className="club-logo">
+          <img src="/src/assets/BocaEscudo.svg" alt="Escudo Boca Juniors" />
+          <p>
+            Club Atlético <br /> <span>Boca Juniors Bolivia</span>
+          </p>
+        </div>
         <Link to="/" className={pathname === "/" ? "active" : ""}>
           <FaHome /> Inicio
         </Link>
