@@ -23,37 +23,37 @@ function SidebarLayout({ children }) {
           </p>
         </div>
         <Link to="/" className={pathname === "/" ? "active" : ""}>
-          <FaHome /> Inicio
+          <FaHome /> <span>Inicio</span>
         </Link>
         <Link
           to="/anadir-jugador"
           className={pathname === "/anadir-jugador" ? "active" : ""}
         >
-          <FaPlus /> Añadir jugador
+          <FaPlus /> <span>Añadir jugador</span>
         </Link>
         <Link
           to="/lista-jugador"
           className={pathname === "/lista-jugador" ? "active" : ""}
         >
-          <FaList /> Lista de jugadores
+          <FaList /> <span>Lista de jugadores</span>
         </Link>
         <Link
           to="/estrategias"
           className={pathname === "/estrategias" ? "active" : ""}
         >
-          <FaClipboard /> Tácticas
+          <FaClipboard /> <span>Tácticas</span>
         </Link>
         <Link
           to="/datos-partido"
           className={pathname === "/datos-partido" ? "active" : ""}
         >
-          <FaChartBar /> Datos del partido
+          <FaChartBar /> <span>Datos del partido</span>
         </Link>
         <Link
           to="/dia-partido"
           className={pathname === "/dia-partido" ? "active" : ""}
         >
-          <FaFutbol /> Día de partido
+          <FaFutbol /> <span>Día de partido</span>
         </Link>
       </aside>
       <main className="content">{children}</main>

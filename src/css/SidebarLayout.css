@@ -6,16 +6,20 @@
 }
 
 .sidebar {
-  width: 250px;
+  width: 80px;
   background-color: #0D1440; /* azul de Boca */
   color: white;
   display: flex;
   flex-direction: column;
-  padding: 1rem;
+  padding: 1rem 0.5rem; /* Menor padding horizontal */
   height: 100vh;
+   overflow-x: hidden;
   overflow-y: auto;     /* permite scroll en sidebar si hay muchas opciones */
+  transition: width 0.3s ease;
 }
-
+.sidebar:hover {
+  width: 250px; /* ← Se expande al hacer hover */
+}
 .sidebar a {
   color: white;
   text-decoration: none;
@@ -27,6 +31,15 @@
   transition: background-color 0.2s;
   padding: 0.5rem;
   border-radius: 5px;
+}
+
+.sidebar a span {
+  display: none;
+  transition: opacity 0.3s;
+}
+
+.sidebar:hover a span {
+  display: inline;
 }
 
 .sidebar a:hover,
@@ -48,6 +61,12 @@
   gap: 0.8rem;
   padding: 1rem;
   margin-bottom: 2rem;
+  justify-content: center; /* Centrado cuando está colapsado */
+  transition: justify-content 0.3s;
+}
+
+.sidebar:hover .club-logo {
+  justify-content: flex-start; /* Al expandirse, alinea a la izquierda */
 }
 
 .club-logo img {
@@ -56,11 +75,16 @@
 }
 
 .club-logo p {
-  color: white;
+  display: none;
+  margin: 0;
   font-size: 14px;
   font-weight: bold;
+  color: white;
   line-height: 1.2;
-  margin: 0;
+}
+
+.sidebar:hover .club-logo p {
+  display: block;
 }
 
 .club-logo span {
