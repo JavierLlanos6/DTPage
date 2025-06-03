@@ -54,52 +54,57 @@ function MatchDayPage() {
   };
 
   return (
-    <div className="matchday-container">
-      <h1>Día de Partido</h1>
-
-      <div
-        className="field-container"
-        onDrop={handleDrop}
-        onDragOver={(e) => e.preventDefault()}
-      >
-        {/* Líneas del campo */}
-        <div className="field-lines">
-          <div className="center-circle"></div>
-          <div className="center-line"></div>
-          <div className="goal-area goal-top"></div>
-          <div className="goal-area goal-bottom"></div>
-        </div>
-
-        {/* Jugadores en el campo */}
-        {onField.map((player) => (
-          <div
-            key={player.id}
-            className="player-on-field"
-            style={positions[player.id]}
-            draggable
-            onDragStart={(e) => handleDragStart(e, player)}
-            onDoubleClick={() => removeFromField(player.id)}
-          >
-            <img src={player.photo} alt={player.name} />
-            <span>{player.name}</span>
-          </div>
-        ))}
+    <div className="matchday-wrapper">
+      <div className="matchday-title">
+        <h1>Día de Partido</h1>
       </div>
 
-      <div className="substitutes">
-        <h2>Suplentes</h2>
-        <div className="substitutes-list">
-          {players.map((player) => (
+      <div className="matchday-container">
+        <div
+          className="field-container"
+          onDrop={handleDrop}
+          onDragOver={(e) => e.preventDefault()}
+        >
+          <div className="field-lines">
+            <div className="penalty-area penalty-top"></div>
+            <div className="penalty-area penalty-bottom"></div>
+
+            <div className="center-circle"></div>
+            <div className="center-line"></div>
+            <div className="goal-area goal-top"></div>
+            <div className="goal-area goal-bottom"></div>
+          </div>
+
+          {onField.map((player) => (
             <div
               key={player.id}
-              className="substitute-player"
+              className="player-on-field"
+              style={positions[player.id]}
               draggable
               onDragStart={(e) => handleDragStart(e, player)}
+              onDoubleClick={() => removeFromField(player.id)}
             >
               <img src={player.photo} alt={player.name} />
               <span>{player.name}</span>
             </div>
           ))}
+        </div>
+
+        <div className="substitutes">
+          <h2>Suplentes</h2>
+          <div className="substitutes-list">
+            {players.map((player) => (
+              <div
+                key={player.id}
+                className="substitute-player"
+                draggable
+                onDragStart={(e) => handleDragStart(e, player)}
+              >
+                <img src={player.photo} alt={player.name} />
+                <span>{player.name}</span>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>

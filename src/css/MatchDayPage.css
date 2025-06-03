@@ -1,26 +1,45 @@
-.matchday-container {
-  /* padding: 2rem; */
-  text-align: center;
+.matchday-wrapper {
   background-color: #e0f7e9;
   min-height: 100vh;
+  /* padding: 2rem; */
 }
+
+.matchday-title {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.matchday-title h1 {
+  font-size: 2.5rem;
+  margin: 0;
+}
+
+.matchday-container {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+
 
 h1 {
   margin-bottom: 2rem;
 }
 
 .field-container {
-  position: relative;
-  width: 100%;
-  max-width: 650px;
-  height: 750px;
-  /* aspect-ratio: 2 / 3; Proporción típica de un campo desde arriba */
-  background-color: #228B22; /* Verde césped sólido */
+  flex: 0 0 80%;
+  max-width: 700px;
+  height: 800px;
+  background-color: #228B22;
   border: 4px solid #fff;
   border-radius: 10px;
-  margin: 0 auto;
   overflow: hidden;
+  position: relative;
 }
+
 
 /* Líneas del campo */
 .field-lines {
@@ -64,7 +83,7 @@ h1 {
 .field-lines .goal-area {
   position: absolute;
   width: 120px;
-  height: 40px;
+  height: 60px;
   border: 2px solid white;
 }
 
@@ -80,6 +99,26 @@ h1 {
   transform: translateX(-50%);
 }
 
+.field-lines .penalty-area {
+  position: absolute;
+  width: 340px;  /* área penal más grande */
+  height: 130px; /* mayor profundidad */
+  border: 2px solid white;
+}
+
+.penalty-top {
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.penalty-bottom {
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+
 .player-on-field {
   position: absolute;
   width: 60px;
@@ -89,8 +128,8 @@ h1 {
 }
 
 .player-on-field img {
-  width: 50px;
-  height: 50px;
+  width: 70px;
+  height: 70px;
   border-radius: 50%;
   border: 2px solid white;
   object-fit: cover;
@@ -104,7 +143,7 @@ h1 {
 }
 
 .substitutes {
-  margin-top: 2rem;
+  flex: 0 0 20%;
 }
 
 .substitutes h2 {
@@ -112,10 +151,10 @@ h1 {
 }
 
 .substitutes-list {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 suplentes por fila */
   gap: 1rem;
+  justify-items: center;
 }
 
 .substitute-player {
@@ -130,8 +169,8 @@ h1 {
 }
 
 .substitute-player img {
-  width: 50px;
-  height: 50px;
+  width: 100px;
+  height: 100px;
   object-fit: cover;
   border-radius: 50%;
 }
@@ -139,4 +178,20 @@ h1 {
 .substitute-player span {
   margin-top: 0.5rem;
   font-size: 14px;
+}
+
+@media (max-width: 768px) {
+  .matchday-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .field-container, .substitutes {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+
+  .substitutes-list {
+    grid-template-columns: repeat(2, 1fr); /* 2 por fila en pantallas pequeñas */
+  }
 }
