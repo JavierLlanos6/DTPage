@@ -1,0 +1,142 @@
+.matchday-container {
+  /* padding: 2rem; */
+  text-align: center;
+  background-color: #e0f7e9;
+  min-height: 100vh;
+}
+
+h1 {
+  margin-bottom: 2rem;
+}
+
+.field-container {
+  position: relative;
+  width: 100%;
+  max-width: 650px;
+  height: 750px;
+  /* aspect-ratio: 2 / 3; Proporción típica de un campo desde arriba */
+  background-color: #228B22; /* Verde césped sólido */
+  border: 4px solid #fff;
+  border-radius: 10px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+/* Líneas del campo */
+.field-lines {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.field-lines::before,
+.field-lines::after {
+  content: '';
+  position: absolute;
+  border: 2px solid white;
+  border-radius: 50%;
+}
+
+.field-lines .center-circle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80px;
+  height: 80px;
+  border: 2px solid white;
+  border-radius: 50%;
+}
+
+.field-lines .center-line {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: white;
+  transform: translateY(-50%);
+}
+
+.field-lines .goal-area {
+  position: absolute;
+  width: 120px;
+  height: 40px;
+  border: 2px solid white;
+}
+
+.goal-top {
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.goal-bottom {
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.player-on-field {
+  position: absolute;
+  width: 60px;
+  text-align: center;
+  cursor: grab;
+  z-index: 10;
+}
+
+.player-on-field img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 2px solid white;
+  object-fit: cover;
+}
+
+.player-on-field span {
+  display: block;
+  font-size: 12px;
+  color: white;
+  text-shadow: 0 0 5px black;
+}
+
+.substitutes {
+  margin-top: 2rem;
+}
+
+.substitutes h2 {
+  margin-bottom: 1rem;
+}
+
+.substitutes-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.substitute-player {
+  background: white;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 0 5px rgba(0,0,0,0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: grab;
+}
+
+.substitute-player img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.substitute-player span {
+  margin-top: 0.5rem;
+  font-size: 14px;
+}
