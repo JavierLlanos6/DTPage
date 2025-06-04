@@ -180,6 +180,16 @@ h1 {
   font-size: 14px;
 }
 
+.highlight-zone {
+  position: absolute;
+  background-color: rgba(255, 255, 0, 0.3);
+  border: 2px dashed #fff200;
+  pointer-events: none;
+  z-index: 4;
+  border-radius: 8px;
+}
+
+
 @media (max-width: 768px) {
   .matchday-container {
     flex-direction: column;
