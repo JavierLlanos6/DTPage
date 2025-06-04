@@ -75,6 +75,18 @@ function MatchDayPage() {
     });
   };
 
+  const isPositionValid = (x, y, positionsAllowed) => {
+    return positionsAllowed.some((posKey) => {
+      const zone = positionZones[posKey];
+      return (
+        x >= zone.left &&
+        x <= zone.left + zone.width &&
+        y >= zone.top &&
+        y <= zone.top + zone.height
+      );
+    });
+  };
+
   return (
     <div className="matchday-wrapper">
       <div className="matchday-title">
@@ -90,14 +102,12 @@ function MatchDayPage() {
           <div className="field-lines">
             <div className="penalty-area penalty-top"></div>
             <div className="penalty-area penalty-bottom"></div>
-
             <div className="center-circle"></div>
             <div className="center-line"></div>
             <div className="goal-area goal-top"></div>
             <div className="goal-area goal-bottom"></div>
           </div>
 
-          {/* Zonas resaltadas por posición mientras se arrastra */}
           {draggingPlayerPositions.map((posKey) => {
             const zone = positionZones[posKey];
             return (
@@ -114,19 +124,25 @@ function MatchDayPage() {
             );
           })}
 
-          {onField.map((player) => (
-            <div
-              key={player.id}
-              className="player-on-field"
-              style={positions[player.id]}
-              draggable
-              onDragStart={(e) => handleDragStart(e, player)}
-              onDoubleClick={() => removeFromField(player.id)}
-            >
-              <img src={player.photo} alt={player.name} />
-              <span>{player.name}</span>
-            </div>
-          ))}
+          {onField.map((player) => {
+            const pos = positions[player.id];
+            const top = parseFloat(pos?.top) || 0;
+            const left = parseFloat(pos?.left) || 0;
+            const valid = isPositionValid(left, top, player.position || []);
+            return (
+              <div
+                key={player.id}
+                className={`player-on-field ${valid ? "valid" : "invalid"}`}
+                style={positions[player.id]}
+                draggable
+                onDragStart={(e) => handleDragStart(e, player)}
+                onDoubleClick={() => removeFromField(player.id)}
+              >
+                <img src={player.photo} alt={player.name} />
+                <span>{player.name}</span>
+              </div>
+            );
+          })}
         </div>
 
         <div className="substitutes">
