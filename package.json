@@ -10,6 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@headlessui/react": "^2.2.4",
+    "@heroicons/react": "^2.2.0",
     "firebase": "^11.8.1",
     "react": "^19.1.0",
     "react-beautiful-dnd": "^13.1.1",

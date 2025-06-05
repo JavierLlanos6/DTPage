@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getPlayers } from "../services/firebase";
+import { Dialog } from "@headlessui/react";
+import { XMarkIcon } from "@heroicons/react/24/outline";
 import "../css/MatchDayPage.css";
 
 const positionZones = {
@@ -20,11 +22,21 @@ const positionZones = {
   POR: { top: 87, left: 39, width: 22, height: 12 },
 };
 
+const eventIcons = {
+  gol: "⚽",
+  asistencia: "🎯",
+  amarilla: "🟨",
+  roja: "🟥",
+};
+
 function MatchDayPage() {
   const [players, setPlayers] = useState([]);
   const [onField, setOnField] = useState([]);
   const [positions, setPositions] = useState({});
   const [draggingPlayerPositions, setDraggingPlayerPositions] = useState([]);
+  const [selectedPlayer, setSelectedPlayer] = useState(null);
+  const [playerEvents, setPlayerEvents] = useState({});
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     getPlayers().then(setPlayers);
@@ -73,6 +85,11 @@ function MatchDayPage() {
       delete newPos[id];
       return newPos;
     });
+    setPlayerEvents((prev) => {
+      const copy = { ...prev };
+      delete copy[id];
+      return copy;
+    });
   };
 
   const isPositionValid = (x, y, positionsAllowed) => {
@@ -84,6 +101,23 @@ function MatchDayPage() {
         y >= zone.top &&
         y <= zone.top + zone.height
       );
+    });
+  };
+
+  const openEventModal = (player) => {
+    setSelectedPlayer(player);
+    setIsModalOpen(true);
+  };
+
+  const toggleEvent = (type) => {
+    if (!selectedPlayer) return;
+    setPlayerEvents((prev) => {
+      const events = prev[selectedPlayer.id] || [];
+      const exists = events.includes(type);
+      const updated = exists
+        ? events.filter((e) => e !== type)
+        : [...events, type];
+      return { ...prev, [selectedPlayer.id]: updated };
     });
   };
 
@@ -129,6 +163,8 @@ function MatchDayPage() {
             const top = parseFloat(pos?.top) || 0;
             const left = parseFloat(pos?.left) || 0;
             const valid = isPositionValid(left, top, player.position || []);
+            const events = playerEvents[player.id] || [];
+
             return (
               <div
                 key={player.id}
@@ -137,9 +173,17 @@ function MatchDayPage() {
                 draggable
                 onDragStart={(e) => handleDragStart(e, player)}
                 onDoubleClick={() => removeFromField(player.id)}
+                onClick={() => openEventModal(player)}
               >
                 <img src={player.photo} alt={player.name} />
                 <span>{player.name}</span>
+                <div className="event-icons">
+                  {events.map((event) => (
+                    <span key={event} className="event-icon">
+                      {eventIcons[event]}
+                    </span>
+                  ))}
+                </div>
               </div>
             );
           })}
@@ -162,6 +206,28 @@ function MatchDayPage() {
           </div>
         </div>
       </div>
+
+      <Dialog
+        open={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        className="modal"
+      >
+        <div className="modal-backdrop" />
+        <div className="modal-panel">
+          <button className="close-btn" onClick={() => setIsModalOpen(false)}>
+            ✖
+          </button>
+
+          <h2>Asignar eventos a {selectedPlayer?.name}</h2>
+          <div className="event-buttons">
+            {Object.keys(eventIcons).map((type) => (
+              <button key={type} onClick={() => toggleEvent(type)}>
+                {eventIcons[type]} {type}
+              </button>
+            ))}
+          </div>
+        </div>
+      </Dialog>
     </div>
   );
 }
