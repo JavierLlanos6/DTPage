@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getPlayers } from "../services/firebase";
 import { Dialog } from "@headlessui/react";
-import { XMarkIcon } from "@heroicons/react/24/outline";
 import "../css/MatchDayPage.css";
 
 const positionZones = {
@@ -63,7 +62,6 @@ function MatchDayPage() {
     } else {
       const player = players.find((p) => p.id === playerId);
       if (!player || onField.length >= 11) return;
-
       setOnField([...onField, player]);
       setPlayers(players.filter((p) => p.id !== playerId));
       setPositions((prev) => ({
@@ -71,7 +69,6 @@ function MatchDayPage() {
         [playerId]: { top: `${y}%`, left: `${x}%` },
       }));
     }
-
     setDraggingPlayerPositions([]);
   };
 
@@ -109,15 +106,37 @@ function MatchDayPage() {
     setIsModalOpen(true);
   };
 
-  const toggleEvent = (type) => {
+  const modifyEvent = (type, change) => {
     if (!selectedPlayer) return;
+    const id = selectedPlayer.id;
+
     setPlayerEvents((prev) => {
-      const events = prev[selectedPlayer.id] || [];
-      const exists = events.includes(type);
-      const updated = exists
-        ? events.filter((e) => e !== type)
-        : [...events, type];
-      return { ...prev, [selectedPlayer.id]: updated };
+      const current = { ...(prev[id] || {}) };
+      const currentValue = current[type] || 0;
+
+      // 👉 Evitar aumentar si ya alcanzó el máximo
+      if (change > 0) {
+        if (type === "amarilla" && currentValue >= 2) return prev;
+        if (type === "roja" && currentValue >= 1) return prev;
+      }
+
+      const newValue = currentValue + change;
+
+      // 👉 Auto-asignar roja si hay 2 amarillas (solo si se está sumando una amarilla)
+      if (type === "amarilla" && newValue === 2 && !(current["roja"] > 0)) {
+        current["roja"] = 1;
+      }
+
+      // 👉 Eliminar eventos si bajan a 0
+      if (newValue <= 0) delete current[type];
+      else current[type] = newValue;
+
+      // 👉 Si se bajó de 2 amarillas, eliminar la roja automática
+      if (type === "amarilla" && newValue < 2) delete current["roja"];
+      // 👉 Si se bajó la roja a 0, eliminarla
+      if (type === "roja" && newValue <= 0) delete current["roja"];
+
+      return { ...prev, [id]: current };
     });
   };
 
@@ -163,7 +182,7 @@ function MatchDayPage() {
             const top = parseFloat(pos?.top) || 0;
             const left = parseFloat(pos?.left) || 0;
             const valid = isPositionValid(left, top, player.position || []);
-            const events = playerEvents[player.id] || [];
+            const events = playerEvents[player.id] || {};
 
             return (
               <div
@@ -178,10 +197,13 @@ function MatchDayPage() {
                 <img src={player.photo} alt={player.name} />
                 <span>{player.name}</span>
                 <div className="event-icons">
-                  {events.map((event) => (
-                    <span key={event} className="event-icon">
-                      {eventIcons[event]}
-                    </span>
+                  {Object.entries(events).map(([type, count]) => (
+                    <div key={type} className="event-icon">
+                      {eventIcons[type]}
+                      {count > 1 && (
+                        <span className="event-count">{count}</span>
+                      )}
+                    </div>
                   ))}
                 </div>
               </div>
@@ -218,12 +240,18 @@ function MatchDayPage() {
             ✖
           </button>
 
-          <h2>Asignar eventos a {selectedPlayer?.name}</h2>
+          <h2>Eventos: {selectedPlayer?.name}</h2>
           <div className="event-buttons">
             {Object.keys(eventIcons).map((type) => (
-              <button key={type} onClick={() => toggleEvent(type)}>
-                {eventIcons[type]} {type}
-              </button>
+              <div key={type} className="event-control">
+                <span className="event-label">
+                  {eventIcons[type]} {type}
+                </span>
+                <div className="event-actions">
+                  <button onClick={() => modifyEvent(type, -1)}>-</button>
+                  <button onClick={() => modifyEvent(type, 1)}>+</button>
+                </div>
+              </div>
             ))}
           </div>
         </div>
