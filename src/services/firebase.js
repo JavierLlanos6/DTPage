@@ -32,3 +32,4 @@ export async function getPlayers() {
   const snapshot = await getDocs(collection(db, "players"));
   return snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
 }
+export { db };
