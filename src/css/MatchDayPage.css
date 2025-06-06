@@ -1,101 +1,292 @@
-.match-data-container {
-  padding: 1rem;
-  max-width: 960px;
-  margin: 0 auto;
+.matchday-wrapper {
+  background-color: #e0f7e9;
+  min-height: 100vh;
+  /* padding: 2rem; */
 }
 
-.title {
-  font-size: 1.75rem;
-  font-weight: bold;
+.matchday-title {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.matchday-title h1 {
+  font-size: 2.5rem;
+  margin: 0;
+}
+
+.matchday-container {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+
+
+h1 {
+  margin-bottom: 2rem;
+}
+
+.field-container {
+  flex: 0 0 80%;
+  max-width: 700px;
+  height: 800px;
+  background-color: #228B22;
+  border: 4px solid #fff;
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+}
+
+
+/* Líneas del campo */
+.field-lines {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.field-lines::before,
+.field-lines::after {
+  content: '';
+  position: absolute;
+  border: 2px solid white;
+  border-radius: 50%;
+}
+
+.field-lines .center-circle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80px;
+  height: 80px;
+  border: 2px solid white;
+  border-radius: 50%;
+}
+
+.field-lines .center-line {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: white;
+  transform: translateY(-50%);
+}
+
+.field-lines .goal-area {
+  position: absolute;
+  width: 120px;
+  height: 60px;
+  border: 2px solid white;
+}
+
+.goal-top {
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.goal-bottom {
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.field-lines .penalty-area {
+  position: absolute;
+  width: 340px;  /* área penal más grande */
+  height: 130px; /* mayor profundidad */
+  border: 2px solid white;
+}
+
+.penalty-top {
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.penalty-bottom {
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+
+.player-on-field {
+  position: absolute;
+  width: 60px;
+  text-align: center;
+  cursor: grab;
+  z-index: 10;
+}
+
+.player-on-field img {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  border: 2px solid white;
+  object-fit: cover;
+}
+
+.player-on-field span {
+  display: block;
+  font-size: 12px;
+  color: white;
+  text-shadow: 0 0 5px black;
+}
+
+.substitutes {
+  flex: 0 0 20%;
+}
+
+.substitutes h2 {
   margin-bottom: 1rem;
 }
 
-.form {
+.substitutes-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 suplentes por fila */
+  gap: 1rem;
+  justify-items: center;
+}
+
+.substitute-player {
+  background: white;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 0 5px rgba(0,0,0,0.2);
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  align-items: center;
+  cursor: grab;
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 1rem;
-}
-
-.input {
-  padding: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 0.375rem;
-}
-
-.input-full {
-  width: 100%;
-  padding: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 0.375rem;
-}
-
-.input-error {
-  border-color: red;
-}
-
-.error-text {
-  color: red;
-  font-size: 0.875rem;
-}
-
-.input-pairs {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 0.5rem;
-}
-
-.subtitle {
-  font-weight: 600;
-  margin-top: 1rem;
-  margin-bottom: 0.5rem;
-}
-
-.field {
-  width: 100%;
-  height: 300px;
-  background-color: #227c3a;
-  position: relative;
-  border: 2px solid #1e6b2f;
-  border-radius: 0.5rem;
-  cursor: crosshair;
-}
-
-.dot {
-  position: absolute;
-  width: 14px;
-  height: 14px;
+.substitute-player img {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
   border-radius: 50%;
+}
+
+.substitute-player span {
+  margin-top: 0.5rem;
+  font-size: 14px;
+}
+
+.highlight-zone {
+  position: absolute;
+  background-color: rgba(255, 255, 0, 0.3);
+  border: 2px dashed #fff200;
+  pointer-events: none;
+  z-index: 4;
+  border-radius: 8px;
+}
+.player-on-field.valid img {
+  border: 3px solid darkgreen;
+}
+
+.player-on-field.invalid img {
+  border: 3px solid red;
+}
+
+.player-on-field {
+  position: absolute;
+  width: 80px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.event-icons {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  display: flex;
+  gap: 2px;
+  z-index: 2;
+}
+
+.event-icon {
+  font-size: 16px;
+  background: rgba(255, 255, 255, 0.479);
+  border-radius: 50%;
+  padding: 1px 4px;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.4);
+}
+
+.event-icons {
+  position: absolute;
+  top: -20px;
+  right: -20px;
+  display: flex;
+  gap: 4px;
+  font-size: 14px;
+}
+
+/* Modal styling */
+.modal-panel {
+  position: fixed;
+  top: 50%;
+  left: 50%;
   transform: translate(-50%, -50%);
-  border: 2px solid #000;
+  background: white;
+  padding: 2rem;
+  z-index: 50;
+  border-radius: 1rem;
+  max-width: 90%;
+  width: 400px;
 }
 
-.dot.goal {
-  background-color: yellow;
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 40;
 }
 
-.dot.shot {
-  background-color: white;
-}
-
-.dot.conceded {
-  background-color: red;
-}
-
-.submit-button {
-  background-color: #2563eb;
-  color: white;
+.event-buttons button {
+  margin: 0.5rem;
+  font-size: 1.1rem;
   padding: 0.5rem 1rem;
-  border-radius: 0.375rem;
-  transition: background-color 0.2s;
-  font-weight: 600;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  background: #0D1440;
+  transition: 0.3s;
 }
 
-.submit-button:hover {
-  background-color: #1d4ed8;
+.event-buttons button:hover {
+  background: #ddd;
+}
+
+.close-btn {
+  background: #0D1440;
+  border: none;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  color: white;
+}
+
+
+@media (max-width: 768px) {
+  .matchday-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .field-container, .substitutes {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+
+  .substitutes-list {
+    grid-template-columns: repeat(2, 1fr); /* 2 por fila en pantallas pequeñas */
+  }
 }
