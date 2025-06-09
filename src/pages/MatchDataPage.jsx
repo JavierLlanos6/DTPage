@@ -126,15 +126,19 @@ export default function MatchDataPage() {
             { name: "saves", label: "Salvadas" },
             { name: "interceptions", label: "Intercepciones" },
           ].map(({ name, label, type = "number" }) => (
-            <input
-              key={name}
-              type={type}
-              name={name}
-              value={stats[name]}
-              onChange={handleChange}
-              placeholder={label}
-              className="input"
-            />
+            <div key={name} className="input-group">
+              <label htmlFor={name} className="input-label">
+                {label}
+              </label>
+              <input
+                id={name}
+                type={type}
+                name={name}
+                value={stats[name]}
+                onChange={handleChange}
+                className="input"
+              />
+            </div>
           ))}
         </div>
 
@@ -149,17 +153,21 @@ export default function MatchDataPage() {
             },
             { key: "red", label: "Jugador con roja", target: "redCards" },
           ].map(({ key, label, target }) => (
-            <input
-              key={key}
-              type="text"
-              placeholder={label}
-              value={tempInputs[key]}
-              onChange={(e) =>
-                setTempInputs((prev) => ({ ...prev, [key]: e.target.value }))
-              }
-              onKeyDown={(e) => e.key === "Enter" && handleAddEvent(target)}
-              className="input-full"
-            />
+            <div key={key} className="input-group-full">
+              <label htmlFor={key} className="input-label">
+                {label}
+              </label>
+              <input
+                id={key}
+                type="text"
+                value={tempInputs[key]}
+                onChange={(e) =>
+                  setTempInputs((prev) => ({ ...prev, [key]: e.target.value }))
+                }
+                onKeyDown={(e) => e.key === "Enter" && handleAddEvent(target)}
+                className="input-full"
+              />
+            </div>
           ))}
         </div>
 
