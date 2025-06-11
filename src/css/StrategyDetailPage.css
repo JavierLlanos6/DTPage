@@ -1,0 +1,64 @@
+/* src/pages/StrategyDetailPage.css */
+.strategy-container {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  background-color: #fefefe;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 30px;
+  color: #222;
+}
+
+.section {
+  margin-bottom: 30px;
+}
+
+.section-title {
+  font-size: 20px;
+  text-align: center;
+  padding-bottom: 5px;
+  border-bottom: 2px solid #ccc;
+  margin-bottom: 15px;
+  color: #444;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr 1fr;
+  text-align: center;
+  padding: 8px 0;
+}
+
+.team-value {
+  color: #2c7be5;
+  font-weight: bold;
+  text-align: right;
+  padding-right: 10px;
+}
+
+.label {
+  font-weight: 500;
+  color: #333;
+}
+
+.opponent-value {
+  color: #d9534f;
+  font-weight: bold;
+  text-align: left;
+  padding-left: 10px;
+}
+
+.loading {
+  text-align: center;
+  font-size: 18px;
+  padding: 40px;
+  color: #666;
+}

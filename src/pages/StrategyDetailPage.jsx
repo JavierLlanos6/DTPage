@@ -33,9 +33,7 @@ export default function StrategyDetailPage() {
 
   return (
     <div className="strategy-container">
-      <h2 className="title">
-        {matchId} - vs {opponent}
-      </h2>
+      <h2 className="title">Boca Juniors vs {opponent}</h2>
 
       {[
         {
