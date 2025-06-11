@@ -110,3 +110,69 @@
 .submit-button:hover {
   background-color: #1d4ed8;
 }
+
+.football-field {
+  position: relative;
+  background-color: #2a7a2a;
+  border: 4px solid white;
+  width: 100%;
+  max-width: 600px;
+  aspect-ratio: 2 / 1;
+  margin: 20px auto;
+  cursor: crosshair;
+}
+
+.field-line {
+  position: absolute;
+  border: 2px solid white;
+}
+
+.center-line {
+  left: 50%;
+  top: 0;
+  height: 100%;
+  width: 0;
+}
+
+.center-circle {
+  width: 20%;
+  height: 40%;
+  border: 2px solid white;
+  border-radius: 50%;
+  position: absolute;
+  left: 40%;
+  top: 30%;
+}
+
+.penalty-box {
+  width: 16%;
+  height: 60%;
+  top: 20%;
+}
+
+.right-box {
+  right: 0;
+  border-right: none;
+  border-left: 2px solid white;
+}
+
+.left-box {
+  /* right: 0; */
+  border-left: none;
+  border-right: 2px solid white;
+}
+
+.small-box {
+  width: 8%;
+  height: 30%;
+  top: 35%;
+}
+
+.goal-dot {
+  width: 6px;
+  height: 6px;
+  background: white;
+  border-radius: 50%;
+  position: absolute;
+}
+

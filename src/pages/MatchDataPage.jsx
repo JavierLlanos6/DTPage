@@ -72,8 +72,8 @@ export default function MatchDataPage() {
     const rect = e.target.getBoundingClientRect();
     const x = ((e.clientX - rect.left) / rect.width) * 100;
     const y = ((e.clientY - rect.top) / rect.height) * 100;
-    const type = prompt("Tipo de evento (goal, shot, conceded):");
-    if (!["goal", "shot", "conceded"].includes(type)) return;
+    const type = prompt("Tipo de evento (goal, shot, conceded, shotconceded):");
+    if (!["goal", "shot", "conceded", "shotconceded"].includes(type)) return;
     setTeamStats((prev) => ({
       ...prev,
       shotMap: [...prev.shotMap, { x, y, type }],
@@ -227,70 +227,37 @@ export default function MatchDataPage() {
   ];
 
   const renderFootballField = () => (
-    <div
-      className="football-field"
-      onClick={handleFieldClick}
-      style={{
-        margin: "20px 0",
-        width: "100%",
-        maxWidth: 600,
-        aspectRatio: "2 / 1",
-        backgroundColor: "#2a7a2a",
-        border: "2px solid white",
-        borderRadius: 10,
-        position: "relative",
-        cursor: "crosshair",
-        userSelect: "none",
-      }}
-    >
+    <div className="football-field" onClick={handleFieldClick}>
       {/* Líneas del campo */}
-      <div
-        style={{
-          position: "absolute",
-          top: "50%",
-          left: 0,
-          width: "100%",
-          height: 2,
-          backgroundColor: "white",
-          transform: "translateY(-50%)",
-        }}
-      />
-      <div
-        style={{
-          position: "absolute",
-          top: "50%",
-          left: "50%",
-          width: 80,
-          height: 80,
-          borderRadius: "50%",
-          border: "2px solid white",
-          transform: "translate(-50%, -50%)",
-        }}
-      />
-      {/* Aquí puedes agregar más líneas y zonas si quieres */}
-      {/* Dibujar puntos de tiros anotados, etc. */}
-      {teamStats.shotMap.map(({ x, y, type }, i) => {
-        let color = "yellow";
-        if (type === "goal") color = "lime";
-        else if (type === "conceded") color = "red";
-        return (
-          <div
-            key={i}
-            style={{
-              position: "absolute",
-              left: `${x}%`,
-              top: `${y}%`,
-              width: 10,
-              height: 10,
-              backgroundColor: color,
-              borderRadius: "50%",
-              transform: "translate(-50%, -50%)",
-              pointerEvents: "none",
-            }}
-            title={type}
-          />
-        );
-      })}
+      <div className="field-line center-line" />
+      <div className="field-line center-circle" />
+      <div className="field-line penalty-box left-box" />
+      <div className="field-line penalty-box right-box" />
+      <div className="field-line small-box left-box" />
+      <div className="field-line small-box right-box" />
+
+      {/* Eventos en el campo */}
+      {teamStats.shotMap.map((event, index) => (
+        <div
+          key={index}
+          title={event.type}
+          className="goal-dot"
+          style={{
+            left: `calc(${event.x}% - 3px)`,
+            top: `calc(${event.y}% - 3px)`,
+            backgroundColor:
+              event.type === "goal"
+                ? "blue"
+                : event.type === "shot"
+                ? "white"
+                : event.type === "conceded"
+                ? "red"
+                : event.type === "shotConceded"
+                ? "yellow"
+                : "yellow",
+          }}
+        />
+      ))}
     </div>
   );
 
