@@ -41,7 +41,7 @@ function SidebarLayout({ children }) {
           to="/estrategias"
           className={pathname === "/estrategias" ? "active" : ""}
         >
-          <FaClipboard /> <span>Tácticas</span>
+          <FaClipboard /> <span>Historial de partidos</span>
         </Link>
         <Link
           to="/datos-partido"
