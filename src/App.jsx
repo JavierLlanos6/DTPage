@@ -7,6 +7,7 @@ import MatchDayPage from "./pages/MatchDayPage";
 import PlayerListPage from "./pages/PlayerListaPage";
 import HomePage from "./pages/HomePage";
 import SidebarLayout from "./components/SidebarLayout";
+import StrategyDetailPage from "./pages/StrategyDetailPage";
 
 function App() {
   return (
@@ -17,6 +18,10 @@ function App() {
           <Route path="/anadir-jugador" element={<PlayerPage />} />
           <Route path="/lista-jugador" element={<PlayerListPage />} />
           <Route path="/estrategias" element={<StrategyPage />} />
+          <Route
+            path="/estrategias/:matchId"
+            element={<StrategyDetailPage />}
+          />
           <Route path="/datos-partido" element={<MatchDataPage />} />
           <Route path="/dia-partido" element={<MatchDayPage />} />
         </Routes>
