@@ -1,0 +1,55 @@
+.strategy-container {
+  padding: 1rem;
+}
+
+.strategy-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  color: #00225c; /* Azul oscuro Boca */
+}
+
+.strategy-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+@media (min-width: 768px) {
+  .strategy-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .strategy-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.strategy-card {
+  background-color: #00225c; /* Azul Boca */
+  color: white;
+  padding: 1rem;
+  border-radius: 1rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: transform 0.2s, background-color 0.2s, color 0.2s;
+}
+
+.strategy-card:hover {
+  background-color: #ffcc00; /* Amarillo Boca */
+  color: #00225c;
+  transform: scale(1.05);
+}
+
+.strategy-card h3 {
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-bottom: 0.25rem;
+}
+
+.strategy-card p {
+  color: inherit;
+  opacity: 0.85;
+}
