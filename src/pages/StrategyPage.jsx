@@ -1,26 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { db } from "../services/firebase";
+import { collection, getDocs } from "firebase/firestore";
+import MatchStatsCard from "./MatchStatsCard";
 
-function StrategyPage() {
-  const [notes, setNotes] = useState("");
-  const [link, setLink] = useState("");
+export default function StrategyPage() {
+  const [matches, setMatches] = useState([]);
+
+  useEffect(() => {
+    const fetchMatches = async () => {
+      const snapshot = await getDocs(collection(db, "matches"));
+      const data = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+      setMatches(data);
+    };
+    fetchMatches();
+  }, []);
 
   return (
-    <div className="p-4">
-      <h1 className="text-xl font-bold mb-4">Estrategias</h1>
-      <textarea
-        value={notes}
-        onChange={(e) => setNotes(e.target.value)}
-        placeholder="Notas..."
-        className="border w-full h-24 p-2"
-      />
-      <input
-        value={link}
-        onChange={(e) => setLink(e.target.value)}
-        placeholder="Link a video/jugada"
-        className="border w-full p-2 mt-2"
-      />
+    <div className="strategy-page p-6">
+      <h1 className="text-2xl font-bold mb-4">Estadísticas de Partidos</h1>
+      <div className="space-y-4">
+        {matches.map((match) => (
+          <MatchStatsCard key={match.id} match={match} />
+        ))}
+      </div>
     </div>
   );
 }
-
-export default StrategyPage;
