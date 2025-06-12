@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../services/firebase";
-import "../css/StrategyDetailPage.css"; // Importamos el CSS
+import "../css/StrategyDetailPage.css";
 
 export default function StrategyDetailPage() {
   const { matchId } = useParams();
@@ -29,7 +29,62 @@ export default function StrategyDetailPage() {
     </div>
   );
 
-  const { teamStats, opponentStats, opponent } = matchData;
+  const { teamStats, opponentStats, opponent, events, shotMap } = matchData;
+
+  // 🎯 COMPONENTE SIMPLE PARA RENDERIZAR EL MAPA DE DISPAROS
+  const renderShotMap = () => (
+    <div className="shot-map">
+      <h3 className="section-title">Mapa de Acciones</h3>
+      <div className="field">
+        {shotMap?.map((shot, index) => {
+          const colorMap = {
+            goal: "green",
+            shot: "blue",
+            conceded: "red",
+            shotconceded: "orange",
+          };
+
+          // Normaliza los valores si vienen fuera del 0-100
+          const left = `${Math.min(shot.x, 100)}%`;
+          const top = `${Math.min(shot.y, 100)}%`;
+
+          return (
+            <div
+              key={index}
+              className="dot"
+              style={{
+                left,
+                top,
+                backgroundColor: colorMap[shot.type] || "gray",
+              }}
+              title={shot.type}
+            ></div>
+          );
+        })}
+      </div>
+    </div>
+  );
+
+  // 🎟️ COMPONENTE PARA RENDERIZAR LOS EVENTOS DEL PARTIDO
+  const renderEvents = () => (
+    <section className="section">
+      <h3 className="section-title">EVENTOS DEL PARTIDO</h3>
+      <div className="event-table">
+        <div className="event-header">
+          <span>Jugador</span>
+          <span>Evento</span>
+          <span>Minuto</span>
+        </div>
+        {events?.map((event, index) => (
+          <div key={index} className="event-row">
+            <span>{event.playerName}</span>
+            <span>{event.eventType}</span>
+            <span>{event.minute}'</span>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
 
   return (
     <div className="strategy-container">
@@ -37,6 +92,9 @@ export default function StrategyDetailPage() {
         Boca Juniors <span className="goalteam">{teamStats.goals}</span> -{" "}
         <span className="goalopponent">{opponentStats.goals}</span> {opponent}
       </h2>
+
+      {/* ✅ Mapa de acciones */}
+      {renderShotMap()}
 
       {[
         {
@@ -166,6 +224,9 @@ export default function StrategyDetailPage() {
           )}
         </section>
       ))}
+
+      {/* ✅ Eventos del partido */}
+      {renderEvents()}
     </div>
   );
 }
