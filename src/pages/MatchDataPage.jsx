@@ -38,6 +38,9 @@ const initialStats = {
   clearances: 0,
   interceptions: 0,
   shotMap: [],
+  playerName: "",
+  eventType: "",
+  minute: 0,
 };
 
 export default function MatchDataPage() {
@@ -46,16 +49,6 @@ export default function MatchDataPage() {
   const [teamStats, setTeamStats] = useState(initialStats);
   const [opponentStats, setOpponentStats] = useState(initialStats);
   const [errors, setErrors] = useState({});
-  // const [tempInputs, setTempInputs] = useState({
-  //   goal: "",
-  //   assist: "",
-  //   yellow: "",
-  //   red: "",
-  //   goalOpp: "",
-  //   assistOpp: "",
-  //   yellowOpp: "",
-  //   redOpp: "",
-  // });
 
   // Función para actualizar stats (local o rival)
   const handleChange = (e, isOpponent = false) => {
@@ -79,33 +72,6 @@ export default function MatchDataPage() {
       shotMap: [...prev.shotMap, { x, y, type }],
     }));
   };
-
-  // Agregar eventos como goles, asistencias y tarjetas
-  // const handleAddEvent = (type, isOpponent = false) => {
-  //   const key = isOpponent ? type + "Opp" : type;
-  //   const target = {
-  //     goal: "goals",
-  //     assist: "assists",
-  //     yellow: "yellowCards",
-  //     red: "redCards",
-  //   }[type];
-  //   const value = tempInputs[key].trim();
-  //   if (!value) return;
-
-  //   if (isOpponent) {
-  //     setOpponentStats((prev) => ({
-  //       ...prev,
-  //       [target]: [...prev[target], value],
-  //     }));
-  //   } else {
-  //     setTeamStats((prev) => ({
-  //       ...prev,
-  //       [target]: [...prev[target], value],
-  //     }));
-  //   }
-
-  //   setTempInputs((prev) => ({ ...prev, [key]: "" }));
-  // };
 
   const renderInput = ({ name, label, type = "number" }, stats, isOpponent) => (
     <div key={name} className="input-group">
@@ -207,6 +173,7 @@ export default function MatchDataPage() {
         opponent: opponentName,
         teamStats,
         opponentStats,
+        events: eventRows,
       });
       alert("Datos guardados con éxito");
       setTeamStats(initialStats);
@@ -219,14 +186,6 @@ export default function MatchDataPage() {
       alert("Hubo un error al guardar los datos");
     }
   };
-
-  // Inputs para eventos (goles, asistencias, tarjetas) con duplicado para equipo contrario
-  // const eventInputs = [
-  //   { key: "goal", label: "Jugador que hizo gol", target: "goals" },
-  //   { key: "assist", label: "Jugador que asistió", target: "assists" },
-  //   { key: "yellow", label: "Jugador con amarilla", target: "yellowCards" },
-  //   { key: "red", label: "Jugador con roja", target: "redCards" },
-  // ];
 
   const renderFootballField = () => (
     <div className="football-field" onClick={handleFieldClick}>
@@ -262,6 +221,26 @@ export default function MatchDataPage() {
       ))}
     </div>
   );
+
+  const [eventRows, setEventRows] = useState([
+    { playerName: "", eventType: "", minute: "" },
+  ]);
+
+  const handleAddRow = () => {
+    setEventRows([...eventRows, { playerName: "", eventType: "", minute: "" }]);
+  };
+
+  const handleRemoveRow = (index) => {
+    const updatedRows = [...eventRows];
+    updatedRows.splice(index, 1);
+    setEventRows(updatedRows);
+  };
+
+  const handleChangeInputs = (index, field, value) => {
+    const updatedRows = [...eventRows];
+    updatedRows[index][field] = value;
+    setEventRows(updatedRows);
+  };
 
   return (
     <div className="match-data-container">
@@ -313,27 +292,62 @@ export default function MatchDataPage() {
           false
         )}
 
-        {/* <h2 className="subtitle">(Eventos - Nuestro equipo)</h2>
-        {eventInputs.map(({ key, label }) => (
-          <div key={key} className="input-group event-input">
+        {eventRows.map((row, index) => (
+          <div key={index} className="flex items-center gap-4">
+            {/* Nombre del jugador */}
             <input
               type="text"
-              placeholder={label}
-              value={tempInputs[key]}
+              placeholder="Nombre del jugador"
+              value={row.playerName}
               onChange={(e) =>
-                setTempInputs((prev) => ({ ...prev, [key]: e.target.value }))
+                handleChangeInputs(index, "playerName", e.target.value)
               }
-              className="input-full"
+              className="border p-2 rounded w-1/3"
             />
-            <button
-              type="button"
-              onClick={() => handleAddEvent(key, false)}
-              className="btn-add"
+
+            {/* Tipo de evento */}
+            <select
+              value={row.eventType}
+              onChange={(e) =>
+                handleChangeInputs(index, "eventType", e.target.value)
+              }
+              className="border p-2 rounded w-1/3"
             >
-              Añadir
-            </button>
+              <option value="">Selecciona evento</option>
+              <option value="gol">Gol</option>
+              <option value="asistencia">Asistencia</option>
+              <option value="amarilla">Amarilla</option>
+              <option value="roja">Roja</option>
+            </select>
+
+            {/* Minuto del evento */}
+            <input
+              type="number"
+              min="1"
+              max="90"
+              placeholder="Minuto"
+              value={row.minute}
+              onChange={(e) =>
+                handleChangeInputs(index, "minute", e.target.value)
+              }
+              className="border p-2 rounded w-20"
+            />
+
+            {/* Botón eliminar */}
+            {eventRows.length > 1 && (
+              <button
+                onClick={() => handleRemoveRow(index)}
+                className="text-red-600 font-bold text-xl"
+              >
+                −
+              </button>
+            )}
           </div>
-        ))} */}
+        ))}
+        {/* Botón agregar */}
+        <button type="button" onClick={handleAddRow}>
+          + Agregar Evento
+        </button>
 
         <hr />
 
@@ -353,31 +367,6 @@ export default function MatchDataPage() {
           opponentStats,
           true
         )}
-
-        {/* <h2 className="subtitle">(Eventos - Equipo contrario)</h2>
-        {eventInputs.map(({ key, label }) => (
-          <div key={key + "Opp"} className="input-group event-input">
-            <input
-              type="text"
-              placeholder={label}
-              value={tempInputs[key + "Opp"]}
-              onChange={(e) =>
-                setTempInputs((prev) => ({
-                  ...prev,
-                  [key + "Opp"]: e.target.value,
-                }))
-              }
-              className="input-full"
-            />
-            <button
-              type="button"
-              onClick={() => handleAddEvent(key, true)}
-              className="btn-add"
-            >
-              Añadir
-            </button>
-          </div>
-        ))} */}
 
         <button type="submit" className="btn-submit">
           Guardar Datos del Partido
