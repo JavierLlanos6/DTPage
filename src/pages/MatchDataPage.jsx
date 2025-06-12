@@ -6,7 +6,7 @@ import "../css/MatchDataPage.css";
 const initialStats = {
   shots: 0,
   shotsOnTarget: 0,
-  goals: [],
+  goals: 0,
   assists: [],
   goalsConceded: 0,
   possession: "",
@@ -28,8 +28,8 @@ const initialStats = {
   dribblesCompleted: 0,
   foulsCommitted: 0,
   foulsSuffered: 0,
-  yellowCards: [],
-  redCards: [],
+  yellowCards: 0,
+  redCards: 0,
   offsides: 0,
   corners: 0,
   freeKicksFor: 0,
@@ -46,16 +46,16 @@ export default function MatchDataPage() {
   const [teamStats, setTeamStats] = useState(initialStats);
   const [opponentStats, setOpponentStats] = useState(initialStats);
   const [errors, setErrors] = useState({});
-  const [tempInputs, setTempInputs] = useState({
-    goal: "",
-    assist: "",
-    yellow: "",
-    red: "",
-    goalOpp: "",
-    assistOpp: "",
-    yellowOpp: "",
-    redOpp: "",
-  });
+  // const [tempInputs, setTempInputs] = useState({
+  //   goal: "",
+  //   assist: "",
+  //   yellow: "",
+  //   red: "",
+  //   goalOpp: "",
+  //   assistOpp: "",
+  //   yellowOpp: "",
+  //   redOpp: "",
+  // });
 
   // Función para actualizar stats (local o rival)
   const handleChange = (e, isOpponent = false) => {
@@ -81,31 +81,31 @@ export default function MatchDataPage() {
   };
 
   // Agregar eventos como goles, asistencias y tarjetas
-  const handleAddEvent = (type, isOpponent = false) => {
-    const key = isOpponent ? type + "Opp" : type;
-    const target = {
-      goal: "goals",
-      assist: "assists",
-      yellow: "yellowCards",
-      red: "redCards",
-    }[type];
-    const value = tempInputs[key].trim();
-    if (!value) return;
+  // const handleAddEvent = (type, isOpponent = false) => {
+  //   const key = isOpponent ? type + "Opp" : type;
+  //   const target = {
+  //     goal: "goals",
+  //     assist: "assists",
+  //     yellow: "yellowCards",
+  //     red: "redCards",
+  //   }[type];
+  //   const value = tempInputs[key].trim();
+  //   if (!value) return;
 
-    if (isOpponent) {
-      setOpponentStats((prev) => ({
-        ...prev,
-        [target]: [...prev[target], value],
-      }));
-    } else {
-      setTeamStats((prev) => ({
-        ...prev,
-        [target]: [...prev[target], value],
-      }));
-    }
+  //   if (isOpponent) {
+  //     setOpponentStats((prev) => ({
+  //       ...prev,
+  //       [target]: [...prev[target], value],
+  //     }));
+  //   } else {
+  //     setTeamStats((prev) => ({
+  //       ...prev,
+  //       [target]: [...prev[target], value],
+  //     }));
+  //   }
 
-    setTempInputs((prev) => ({ ...prev, [key]: "" }));
-  };
+  //   setTempInputs((prev) => ({ ...prev, [key]: "" }));
+  // };
 
   const renderInput = ({ name, label, type = "number" }, stats, isOpponent) => (
     <div key={name} className="input-group">
@@ -145,7 +145,7 @@ export default function MatchDataPage() {
     { name: "shotsOffPost", label: "Tiros al poste" },
     { name: "shotsInsideBox", label: "Tiros dentro del área" },
     { name: "shotsOutsideBox", label: "Tiros fuera del área" },
-    { name: "goalsConceded", label: "Goles recibidos" },
+    { name: "goals", label: "Goles anotados" },
   ];
 
   const passesFields = [
@@ -180,6 +180,8 @@ export default function MatchDataPage() {
     { name: "corners", label: "Tiros de esquina" },
     { name: "freeKicksFor", label: "Tiros libres a favor" },
     { name: "freeKicksAgainst", label: "Tiros libres en contra" },
+    { name: "yellowCards", label: "Tarjetas amarillas en contra" },
+    { name: "redCards", label: "Tarjetas rojas en contra" },
   ];
 
   // Validaciones básicas
@@ -219,12 +221,12 @@ export default function MatchDataPage() {
   };
 
   // Inputs para eventos (goles, asistencias, tarjetas) con duplicado para equipo contrario
-  const eventInputs = [
-    { key: "goal", label: "Jugador que hizo gol", target: "goals" },
-    { key: "assist", label: "Jugador que asistió", target: "assists" },
-    { key: "yellow", label: "Jugador con amarilla", target: "yellowCards" },
-    { key: "red", label: "Jugador con roja", target: "redCards" },
-  ];
+  // const eventInputs = [
+  //   { key: "goal", label: "Jugador que hizo gol", target: "goals" },
+  //   { key: "assist", label: "Jugador que asistió", target: "assists" },
+  //   { key: "yellow", label: "Jugador con amarilla", target: "yellowCards" },
+  //   { key: "red", label: "Jugador con roja", target: "redCards" },
+  // ];
 
   const renderFootballField = () => (
     <div className="football-field" onClick={handleFieldClick}>
@@ -311,7 +313,7 @@ export default function MatchDataPage() {
           false
         )}
 
-        <h2 className="subtitle">(Eventos - Nuestro equipo)</h2>
+        {/* <h2 className="subtitle">(Eventos - Nuestro equipo)</h2>
         {eventInputs.map(({ key, label }) => (
           <div key={key} className="input-group event-input">
             <input
@@ -331,7 +333,7 @@ export default function MatchDataPage() {
               Añadir
             </button>
           </div>
-        ))}
+        ))} */}
 
         <hr />
 
@@ -352,7 +354,7 @@ export default function MatchDataPage() {
           true
         )}
 
-        <h2 className="subtitle">(Eventos - Equipo contrario)</h2>
+        {/* <h2 className="subtitle">(Eventos - Equipo contrario)</h2>
         {eventInputs.map(({ key, label }) => (
           <div key={key + "Opp"} className="input-group event-input">
             <input
@@ -375,7 +377,7 @@ export default function MatchDataPage() {
               Añadir
             </button>
           </div>
-        ))}
+        ))} */}
 
         <button type="submit" className="btn-submit">
           Guardar Datos del Partido

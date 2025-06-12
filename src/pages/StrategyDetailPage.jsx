@@ -33,12 +33,16 @@ export default function StrategyDetailPage() {
 
   return (
     <div className="strategy-container">
-      <h2 className="title">Boca Juniors vs {opponent}</h2>
+      <h2 className="title">
+        Boca Juniors <span className="goalteam">{teamStats.goals}</span> -{" "}
+        <span className="goalopponent">{opponentStats.goals}</span> {opponent}
+      </h2>
 
       {[
         {
           title: "DISPAROS",
           rows: [
+            ["Goles", teamStats.goals, opponentStats.goals],
             ["Disparos", teamStats.shots, opponentStats.shots],
             [
               "Disparos al arco",
@@ -150,16 +154,8 @@ export default function StrategyDetailPage() {
         {
           title: "DISCIPLINA",
           rows: [
-            [
-              "Amarillas",
-              teamStats.yellowCards?.length,
-              opponentStats.yellowCards?.length,
-            ],
-            [
-              "Rojas",
-              teamStats.redCards?.length,
-              opponentStats.redCards?.length,
-            ],
+            ["Amarillas", teamStats.yellowCards, opponentStats.yellowCards],
+            ["Rojas", teamStats.redCards, opponentStats.redCards],
           ],
         },
       ].map(({ title, rows }) => (
