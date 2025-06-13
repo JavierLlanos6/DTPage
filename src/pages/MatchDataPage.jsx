@@ -49,6 +49,7 @@ export default function MatchDataPage() {
   const [teamStats, setTeamStats] = useState(initialStats);
   const [opponentStats, setOpponentStats] = useState(initialStats);
   const [errors, setErrors] = useState({});
+  const [shots, setShots] = useState([]);
 
   // Función para actualizar stats (local o rival)
   const handleChange = (e, isOpponent = false) => {
@@ -61,15 +62,34 @@ export default function MatchDataPage() {
   };
 
   // Manejo de eventos en campo (solo para local)
+  // const handleFieldClick = (e) => {
+  //   const rect = e.currentTarget.getBoundingClientRect();
+  //   const x = ((e.clientX - rect.left) / rect.width) * 100;
+  //   const y = ((e.clientY - rect.top) / rect.height) * 100;
+  //   const type = prompt("Tipo de evento (goal, shot, conceded, shotconceded):");
+  //   if (!["goal", "shot", "conceded", "shotconceded"].includes(type)) return;
+  //   setTeamStats((prev) => ({
+  //     ...prev,
+  //     shotMap: [...prev.shotMap, { x, y, type }],
+  //   }));
+  // };
+
   const handleFieldClick = (e) => {
     const rect = e.currentTarget.getBoundingClientRect();
     const x = ((e.clientX - rect.left) / rect.width) * 100;
     const y = ((e.clientY - rect.top) / rect.height) * 100;
-    const type = prompt("Tipo de evento (goal, shot, conceded, shotconceded):");
+
+    const type = prompt("Tipo de acción: goal, shot, conceded, shotconceded");
+
     if (!["goal", "shot", "conceded", "shotconceded"].includes(type)) return;
+
+    const newEvent = { x, y, type };
+    setShots((prev) => [...prev, newEvent]);
+
+    // También lo agregamos a teamStats.shotMap para que se muestre visualmente
     setTeamStats((prev) => ({
       ...prev,
-      shotMap: [...prev.shotMap, { x, y, type }],
+      shotMap: [...prev.shotMap, newEvent],
     }));
   };
 
@@ -174,6 +194,7 @@ export default function MatchDataPage() {
         teamStats,
         opponentStats,
         events: eventRows,
+        shotMap: shots,
       });
       alert("Datos guardados con éxito");
       setTeamStats(initialStats);

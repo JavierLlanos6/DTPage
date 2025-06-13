@@ -38,8 +38,8 @@ export default function StrategyDetailPage() {
       <div className="field">
         {shotMap?.map((shot, index) => {
           const colorMap = {
-            goal: "green",
-            shot: "blue",
+            goal: "blue",
+            shot: "white",
             conceded: "red",
             shotconceded: "orange",
           };
