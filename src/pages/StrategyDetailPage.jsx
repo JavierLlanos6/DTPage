@@ -35,7 +35,13 @@ export default function StrategyDetailPage() {
   const renderShotMap = () => (
     <div className="shot-map">
       <h3 className="section-title">Mapa de Acciones</h3>
-      <div className="field">
+      <div className="field-camp">
+        <div className="field-line center-line" />
+        <div className="field-line center-circle" />
+        <div className="field-line penalty-box left-box" />
+        <div className="field-line penalty-box right-box" />
+        <div className="field-line small-box left-box" />
+        <div className="field-line small-box right-box" />
         {shotMap?.map((shot, index) => {
           const colorMap = {
             goal: "blue",
