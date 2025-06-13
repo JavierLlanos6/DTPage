@@ -95,6 +95,7 @@
   border: 1px solid #ccc;
   border-radius: 8px;
   overflow: hidden;
+  text-align: center;
 }
 
 .event-header, .event-row {
