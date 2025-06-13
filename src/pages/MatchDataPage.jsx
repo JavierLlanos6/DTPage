@@ -62,18 +62,6 @@ export default function MatchDataPage() {
   };
 
   // Manejo de eventos en campo (solo para local)
-  // const handleFieldClick = (e) => {
-  //   const rect = e.currentTarget.getBoundingClientRect();
-  //   const x = ((e.clientX - rect.left) / rect.width) * 100;
-  //   const y = ((e.clientY - rect.top) / rect.height) * 100;
-  //   const type = prompt("Tipo de evento (goal, shot, conceded, shotconceded):");
-  //   if (!["goal", "shot", "conceded", "shotconceded"].includes(type)) return;
-  //   setTeamStats((prev) => ({
-  //     ...prev,
-  //     shotMap: [...prev.shotMap, { x, y, type }],
-  //   }));
-  // };
-
   const handleFieldClick = (e) => {
     const rect = e.currentTarget.getBoundingClientRect();
     const x = ((e.clientX - rect.left) / rect.width) * 100;
