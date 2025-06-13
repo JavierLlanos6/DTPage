@@ -191,7 +191,7 @@ function MatchDayPage() {
                 style={positions[player.id]}
                 draggable
                 onDragStart={(e) => handleDragStart(e, player)}
-                onDoubleClick={() => removeFromField(player.id)}
+                // onDoubleClick={() => removeFromField(player.id)}
                 onClick={() => openEventModal(player)}
               >
                 <img src={player.photo} alt={player.name} />
@@ -254,6 +254,15 @@ function MatchDayPage() {
               </div>
             ))}
           </div>
+          <button
+            className="sub-button"
+            onClick={() => {
+              removeFromField(selectedPlayer.id);
+              setIsModalOpen(false);
+            }}
+          >
+            Enviar al banquillo
+          </button>
         </div>
       </Dialog>
     </div>

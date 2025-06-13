@@ -274,6 +274,19 @@ h1 {
   color: white;
 }
 
+.sub-button {
+  margin-top: 1rem;
+  background-color: #0D1440;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+}
+.sub-button:hover {
+  background-color: #FDB813;
+  color: #0D1440;
+}
+
 
 @media (max-width: 768px) {
   .matchday-container {
