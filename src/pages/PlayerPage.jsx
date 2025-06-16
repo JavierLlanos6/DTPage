@@ -64,7 +64,11 @@ function PlayerPage() {
     if (form.position.length === 0)
       newErrors.position = "Selecciona al menos una posición.";
     if (!form.playerType) newErrors.playerType = "Selecciona un tipo.";
-    if (!form.photo) newErrors.photo = "Ingresa un enlace de imagen.";
+    if (!form.photo) {
+      newErrors.photo = "Ingresa un enlace de imagen.";
+    } else if (!form.photo.toLowerCase().endsWith(".jpg")) {
+      newErrors.photo = "El enlace debe terminar en .jpg";
+    }
 
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
