@@ -18,15 +18,12 @@
 }
 
 .player-card {
-  flex: 1 1 calc(25% - 1.5rem); /* Máximo 4 por fila */
-  max-width: 280px;            /* Límite de tamaño para evitar cards gigantes */
-  min-width: 180px;            /* Para evitar que se encojan demasiado */
+  width: 240px; /* Fijo y uniforme para todos */
   border: 1px solid #ddd;
   border-radius: 10px;
   overflow: hidden;
-  position: relative;
-  transition: transform 0.3s;
   background-color: #fff;
+  transition: transform 0.3s;
 }
 
 .player-card:hover {
@@ -34,11 +31,10 @@
 }
 
 .card-image {
-  aspect-ratio: 1 / 1; /* cuadrada */
-  position: relative;
   width: 100%;
-  /* height: 250px; */
+  height: 240px;
   overflow: hidden;
+  position: relative;
 }
 
 .card-image img {
